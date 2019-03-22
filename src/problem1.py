@@ -1,8 +1,8 @@
 """
 Exam 1, problem 1. 15 Points
-Authors: Every CSSE faculty member, Dr. Brackin, and PUT YOUR NAME HERE.
+Authors: Every CSSE faculty member, Dr. Brackin, and Jonathan Ely.
 """
-# TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+# DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 
 def main():
@@ -12,9 +12,10 @@ def main():
     # UN-comment tests as you work the problems.
     ###########################################################################
 
-    #run_test_init()
-    #run_test_go_to_floor()
-    #run_test_get_passengers()
+    test_get_passengers()
+    run_test_init()
+    run_test_go_to_floor()
+    run_test_get_passengers()
 
 
 ###############################################################################
@@ -63,6 +64,11 @@ class Elevator(object):
         # ---------------------------------------------------------------------
         # ---------------------------------------------------------------------
 
+        self.capacity = capacity
+        self.num_floors = num_floors
+        self.num_of_passengers = 0
+        self.current_floor = 0
+
 
     def go_to_floor(self,floor):
         """
@@ -97,7 +103,11 @@ class Elevator(object):
         #     Write the testing code (below) before writing this method.
         # ---------------------------------------------------------------------
         # ---------------------------------------------------------------------
-
+        if(self.num_floors > floor):
+            self.current_floor = floor
+            return True
+        else:
+            return False
 
     def get_passengers(self,num_passengers):
         """
@@ -131,12 +141,23 @@ class Elevator(object):
           #   False is returned by the method
         """
 
+        #I hope you can appreciate the unfortunate naming of my variable here
+        if (self.capacity > num_passengers + self.num_of_passengers):
+            self.num_of_passengers += num_passengers
+            return True
+        else:
+            return False
+
 
 # ---------------------------------------------------------------------
 #     TODO: 6. Implement the get_passengers method. (3 pts)
 #     Write the testing code (below) before writing this function.
 # ---------------------------------------------------------------------
 # ---------------------------------------------------------------------
+
+def test_get_passengers():
+    e1 = Elevator(20, 18)
+    print(e1.get_passengers(35))
 
 
 # ---------------------------------------------------------------------
@@ -193,7 +214,8 @@ def run_test_go_to_floor():
     #     Add your values for actual below here
     #
     ################################################################
-    print()
+    print("Actual: go_to_floor returns :" + str(e1.go_to_floor(expected_go_to_floor)))
+    print("Actual: " + str(e1.capacity) + " " + str(e1.num_floors) + " " + str(e1.current_floor))
 
 
 def run_test_get_passengers():
@@ -223,8 +245,8 @@ def run_test_get_passengers():
     #     Add your values for actual below here
     #
     ################################################################
-    print("Actual:  ")
-    print()
+    print("Actual:  " + str(e1.get_passengers(expected_num_passengers)))
+    print("Actual: " + " " + str(e1.capacity) + " " + str(e1.num_floors) + " " + str(e1.num_of_passengers))
 
 
 def print_failure_message():
